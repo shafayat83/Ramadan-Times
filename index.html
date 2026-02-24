@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>চট্টগ্রাম রমজান সময়সূচী ২০২৬ - লাইভ স্ট্যাটাস</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700;900&display=swap" rel="stylesheet" />
+
+    <style>
+        body { font-family: 'Noto Sans Bengali', sans-serif; background-color: #f8fafc; }
+        .emerald-gradient { background: linear-gradient(135deg, #065f46 0%, #064e3b 100%); }
+        .active-tab { background-color: #059669 !important; color: white !important; }
+    </style>
+</head>
+
+<body class="pb-20">
+
+        <!-- Header -->
+        <header class="emerald-gradient text-white pt-12 pb-24 px-4 rounded-b-[50px] shadow-2xl text-center relative overflow-hidden">
+            <div class="relative z-10">
+                <p class="text-emerald-100 text-sm md:text-lg mb-2">পবিত্র মাহে রমাদ্বান ১৪৪৭ হিজরী সনের</p>
+                <h1 class="text-3xl md:text-5xl font-bold">সাহরী ও ইফতারের সময়সূচী</h1>
+                <p class="text-emerald-100 text-sm md:text-lg mb-2">শেখটোলা যুব সমাজের পক্ষ থেকে</p>
+                <p class="mt-4 text-emerald-200/80 flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+                    চট্টগ্রাম, বাংলাদেশ
+                </p>
+            </div>
+        </header>
+
+
+<main class="max-w-4xl mx-auto px-4 -mt-20 space-y-10 relative z-20">
+
+    <!-- Countdown -->
+    <div class="bg-emerald-900 rounded-[40px] p-10 text-white shadow-2xl text-center border border-emerald-700">
+        <p class="text-emerald-300 mb-8 uppercase tracking-widest text-xs font-bold">ইফতারের আর বাকি</p>
+
+        <div id="timer-ui" class="flex justify-center gap-4 md:gap-10">
+            <div class="flex flex-col">
+                <div id="h" class="bg-white/10 rounded-2xl w-16 h-16 md:w-24 md:h-24 flex items-center justify-center text-3xl md:text-5xl font-bold border border-white/20">০০</div>
+                <span class="text-xs mt-2 text-emerald-300">ঘণ্টা</span>
+            </div>
+
+            <div class="flex flex-col">
+                <div id="m" class="bg-white/10 rounded-2xl w-16 h-16 md:w-24 md:h-24 flex items-center justify-center text-3xl md:text-5xl font-bold border border-white/20">০০</div>
+                <span class="text-xs mt-2 text-emerald-300">মিনিট</span>
+            </div>
+
+            <div class="flex flex-col">
+                <div id="s" class="bg-white/10 rounded-2xl w-16 h-16 md:w-24 md:h-24 flex items-center justify-center text-3xl md:text-5xl font-bold border border-white/20">০০</div>
+                <span class="text-xs mt-2 text-emerald-300">সেকেন্ড</span>
+            </div>
+        </div>
+
+        <div id="expired-msg" class="hidden text-2xl md:text-4xl font-bold text-amber-400 py-4">ইফতারের সময় হয়েছে! আলহামদুলিল্লাহ</div>
+    </div>
+
+    <!-- Today's Info -->
+    <div class="bg-white rounded-[40px] p-10 shadow-xl border border-emerald-50">
+        <div class="flex justify-between items-center mb-10">
+            <h2 class="text-2xl font-bold text-emerald-950">আজকের সময়সূচি</h2>
+            <span id="ramadan-day" class="bg-emerald-100 text-emerald-700 px-4 py-1 rounded-full text-sm font-bold">রমজান দিন: --</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100">
+                <p class="text-slate-500 text-xs font-bold mb-2 uppercase">সাহরি শেষ</p>
+                <p id="sehri" class="text-3xl font-black text-emerald-950">--:--</p>
+            </div>
+
+            <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100">
+                <p class="text-slate-500 text-xs font-bold mb-2 uppercase">ফজর</p>
+                <p id="fajr" class="text-3xl font-black text-emerald-950">--:--</p>
+            </div>
+
+            <div class="p-6 bg-emerald-600 text-white rounded-3xl shadow-xl">
+                <p class="text-emerald-100 text-xs font-bold mb-2 uppercase">ইফতার</p>
+                <p id="iftar" class="text-3xl font-black">--:--</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Schedule -->
+    <div class="bg-white rounded-[40px] p-8 shadow-xl border border-emerald-50">
+        <div class="flex flex-col md:flex-row justify-between gap-4 mb-8">
+            <h2 class="text-2xl font-bold text-emerald-950">সম্পূর্ণ সময়সূচি</h2>
+
+            <div class="flex p-1 bg-emerald-50 rounded-xl">
+                <button onclick="filterTable('Rahmat')" id="btn-Rahmat" class="px-4 py-2 rounded-lg text-sm font-bold active-tab">রহমত</button>
+                <button onclick="filterTable('Magfirat')" id="btn-Magfirat" class="px-4 py-2 rounded-lg text-sm font-bold text-emerald-700">মাগফিরাত</button>
+                <button onclick="filterTable('Najat')" id="btn-Najat" class="px-4 py-2 rounded-lg text-sm font-bold text-emerald-700">নাজাত</button>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead>
+                <tr class="border-b border-emerald-100">
+                    <th class="py-4 px-2 text-emerald-800/60 font-bold text-sm">রমজান</th>
+                    <th class="py-4 px-2 text-emerald-800/60 font-bold text-sm">সাহরি শেষ</th>
+                    <th class="py-4 px-2 text-emerald-800/60 font-bold text-sm">ফজর</th>
+                    <th class="py-4 px-2 text-emerald-800/60 font-bold text-sm">ইফতার</th>
+                </tr>
+                </thead>
+                <tbody id="schedule-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+ <!-- Features Section -->
+<div class="bg-white rounded-[40px] p-10 md:p-12 shadow-xl border border-slate-100">
+    
+    <div class="flex items-center gap-3 mb-8">
+        <div class="p-3 bg-blue-100 rounded-2xl text-blue-600">
+            <!-- Info Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" 
+                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+        </div>
+        <h2 class="text-3xl font-black text-slate-900">
+            ওয়েবসাইটের বৈশিষ্ট্যসমূহ
+        </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+            <span class="text-emerald-500 mt-1 text-lg">✔</span>
+            <span class="text-slate-700 font-bold">
+                সঠিক সাহরী ও ইফতারের সময়সূচী (চট্টগ্রাম জেলা)
+            </span>
+        </div>
+
+        <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+            <span class="text-emerald-500 mt-1 text-lg">✔</span>
+            <span class="text-slate-700 font-bold">
+                রিয়েল-টাইম ইফতার কাউন্টডাউন টাইমার
+            </span>
+        </div>
+
+        <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+            <span class="text-emerald-500 mt-1 text-lg">✔</span>
+            <span class="text-slate-700 font-bold">
+                রমজানের রহমত, মাগফিরাত ও নাজাতের আলাদা তালিকা
+            </span>
+        </div>
+
+        <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+            <span class="text-emerald-500 mt-1 text-lg">✔</span>
+            <span class="text-slate-700 font-bold">
+                লাইভ ইউজার স্ট্যাটাস ও ভিউ কাউন্টার
+            </span>
+        </div>
+
+        <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+            <span class="text-emerald-500 mt-1 text-lg">✔</span>
+            <span class="text-slate-700 font-bold">
+                রোজার নিয়ত ও ইফতারের দোয়া
+            </span>
+        </div>
+
+        <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+            <span class="text-emerald-500 mt-1 text-lg">✔</span>
+            <span class="text-slate-700 font-bold">
+                সম্পূর্ণ রেসপন্সিভ ও আধুনিক ডিজাইন
+            </span>
+        </div>
+
+    </div>
+</div>
+
+<!-- Live Status Section -->
+<div class="bg-emerald-900 rounded-[40px] p-10 text-white shadow-2xl text-center border border-emerald-700">
+
+    <div class="relative z-10 flex flex-col md:flex-row items-center justify-around gap-10">
+
+        <!-- Active Users -->
+        <div class="text-center">
+
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
+
+                <!-- Users Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-8 h-8 text-emerald-400"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor"
+                     stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M17 20h5V18a4 4 0 00-3-3.87M9 20H4V18a4 4 0 013-3.87m6-3.13a4 4 0 100-8 4 4 0 000 8zm6 0a4 4 0 10-8 0 4 4 0 008 0z" />
+                </svg>
+            </div>
+
+            <p id="live-users" class="text-4xl md:text-5xl font-black mb-2">০</p>
+
+            <p class="text-emerald-300/60 text-xs font-black uppercase tracking-widest">
+                বর্তমানে এক্টিভ আছেন
+            </p>
+        </div>
+
+        <!-- Divider -->
+        <div class="w-px h-20 bg-white/10 hidden md:block"></div>
+
+        <!-- Total Views -->
+        <div class="text-center">
+
+            <!-- Eye Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-8 h-8 text-blue-400 mx-auto mb-4"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor"
+                 stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5
+                         c4.477 0 8.268 2.943 9.542 7
+                         -1.274 4.057-5.065 7-9.542 7
+                         -4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+
+            <p id="total-views" class="text-4xl md:text-5xl font-black mb-2">০</p>
+
+            <p class="text-blue-300/60 text-xs font-black uppercase tracking-widest">
+                মোট ভিজিটর
+            </p>
+        </div>
+
+    </div>
+</div>
+
+</main>
+
+<!-- Footer -->
+<footer class="mt-20 text-center px-4">
+    <div class="bg-white rounded-[40px] p-12 shadow-2xl border border-slate-100 max-w-4xl mx-auto">
+        <img src="https://image2url.com/r2/default/images/1771937404535-fd02a60d-eee2-4a46-9c18-dc920a75efcf.png" alt="Dev" class="w-24 h-24 mx-auto rounded-full border-4 border-emerald-500 mb-6 object-cover" />
+        
+        
+        <p class="text-slate-500 text-sm max-w-md mx-auto leading-relaxed">চট্টগ্রাম জেলার ধর্মপ্রাণ মুসলিমদের জন্য এই প্রফেশনাল সময়সূচী অ্যাপ্লিকেশনটি তৈরি করা হয়েছে।</p>
+    </div>
+    <div class="py-10 text-slate-400 text-xs font-bold uppercase tracking-[0.3em]">&copy; 2026 Ramadan Times - চট্টগ্রাম</div>
+</footer>
+
+<script>
+/* ========= RAMADAN DATA ========= */
+const RAMADAN_DATA = [
+    { day: 1, sehriEnd: "05:11", fajr: "05:16", iftar: "6:05", phase: "Rahmat" },
+    { day: 2, sehriEnd: "05:10", fajr: "05:15", iftar: "6:05", phase: "Rahmat" },
+    { day: 3, sehriEnd: "05:10", fajr: "05:15", iftar: "6:06", phase: "Rahmat" },
+    { day: 4, sehriEnd: "05:09", fajr: "05:14", iftar: "6:06", phase: "Rahmat" },
+    { day: 5, sehriEnd: "05:08", fajr: "05:13", iftar: "6:07", phase: "Rahmat" },
+    { day: 6, sehriEnd: "05:07", fajr: "05:12", iftar: "6:08", phase: "Rahmat" },
+    { day: 7, sehriEnd: "05:07", fajr: "05:12", iftar: "6:08", phase: "Rahmat" },
+    { day: 8, sehriEnd: "05:06", fajr: "05:11", iftar: "6:09", phase: "Rahmat" },
+    { day: 9, sehriEnd: "05:05", fajr: "05:10", iftar: "6:09", phase: "Rahmat" },
+    { day: 10, sehriEnd: "05:04", fajr: "05:09", iftar: "6:10", phase: "Rahmat" },
+    { day: 11, sehriEnd: "05:04", fajr: "05:09", iftar: "6:10", phase: "Magfirat" },
+    { day: 12, sehriEnd: "05:03", fajr: "05:08", iftar: "6:10", phase: "Magfirat" },
+    { day: 13, sehriEnd: "05:03", fajr: "05:08", iftar: "6:10", phase: "Magfirat" },
+    { day: 14, sehriEnd: "05:02", fajr: "05:07", iftar: "6:11", phase: "Magfirat" },
+    { day: 15, sehriEnd: "05:01", fajr: "05:06", iftar: "6:11", phase: "Magfirat" },
+    { day: 16, sehriEnd: "05:00", fajr: "05:05", iftar: "6:12", phase: "Magfirat" },
+    { day: 17, sehriEnd: "04:59", fajr: "05:04", iftar: "6:12", phase: "Magfirat" },
+    { day: 18, sehriEnd: "04:58", fajr: "05:03", iftar: "6:13", phase: "Magfirat" },
+    { day: 19, sehriEnd: "04:57", fajr: "05:02", iftar: "6:13", phase: "Magfirat" },
+    { day: 20, sehriEnd: "04:56", fajr: "05:01", iftar: "6:14", phase: "Magfirat" },
+    { day: 21, sehriEnd: "04:56", fajr: "05:01", iftar: "6:14", phase: "Najat" },
+    { day: 22, sehriEnd: "04:55", fajr: "05:00", iftar: "6:14", phase: "Najat" },
+    { day: 23, sehriEnd: "04:54", fajr: "04:59", iftar: "6:15", phase: "Najat" },
+    { day: 24, sehriEnd: "04:53", fajr: "04:58", iftar: "6:15", phase: "Najat" },
+    { day: 25, sehriEnd: "04:52", fajr: "04:57", iftar: "6:16", phase: "Najat" },
+    { day: 26, sehriEnd: "04:51", fajr: "04:56", iftar: "6:16", phase: "Najat" },
+    { day: 27, sehriEnd: "04:50", fajr: "04:55", iftar: "6:17", phase: "Najat" },
+    { day: 28, sehriEnd: "04:49", fajr: "04:54", iftar: "6:17", phase: "Najat" },
+    { day: 29, sehriEnd: "04:48", fajr: "04:53", iftar: "6:17", phase: "Najat" },
+    { day: 30, sehriEnd: "04:47", fajr: "04:52", iftar: "6:18", phase: "Najat" }
+];
+
+function toBengali(n) {
+    return n.toString().replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[d]);
+}
+
+/* ========= Table Filter ========= */
+function filterTable(phase) {
+    const body = document.getElementById('schedule-body');
+    body.innerHTML = '';
+
+    ['Rahmat', 'Magfirat', 'Najat'].forEach(p => {
+        document.getElementById('btn-' + p).classList.toggle('active-tab', p === phase);
+    });
+
+    RAMADAN_DATA.filter(d => d.phase === phase).forEach(item => {
+        body.innerHTML += `
+            <tr class="border-b border-emerald-50 hover:bg-emerald-50">
+                <td class="py-4 px-2 font-bold">${toBengali(item.day)}</td>
+                <td class="py-4 px-2 text-emerald-700">${toBengali(item.sehriEnd)}</td>
+                <td class="py-4 px-2 text-emerald-700">${toBengali(item.fajr)}</td>
+                <td class="py-4 px-2 font-bold">${toBengali(item.iftar)}</td>
+            </tr>
+        `;
+    });
+}
+
+/* ========= Today + Countdown ========= */
+function updateUI() {
+    const now = new Date();
+
+    // Ramadan start date (তোমার আগের মতোই)
+    const start = new Date(2026, 1, 19); // Feb 19, 2026
+    const diff = Math.floor((now - start) / 86400000) + 1;
+    const day = Math.min(Math.max(diff, 1), 30);
+    const data = RAMADAN_DATA[day - 1];
+
+    document.getElementById('ramadan-day').innerText = "রমজান দিন: " + toBengali(day);
+    document.getElementById('sehri').innerText = toBengali(data.sehriEnd);
+    document.getElementById('fajr').innerText = toBengali(data.fajr);
+    document.getElementById('iftar').innerText = toBengali(data.iftar);
+
+    // Iftar countdown
+    const [hh, mm] = data.iftar.split(':').map(Number);
+    const target = new Date();
+    target.setHours(hh, mm, 0, 0);
+
+    const tDiff = target - now;
+
+    if (tDiff > 0) {
+        const H = Math.floor(tDiff / 3600000);
+        const M = Math.floor((tDiff % 3600000) / 60000);
+        const S = Math.floor((tDiff % 60000) / 1000);
+
+        document.getElementById('h').innerText = toBengali(String(H).padStart(2, '0'));
+        document.getElementById('m').innerText = toBengali(String(M).padStart(2, '0'));
+        document.getElementById('s').innerText = toBengali(String(S).padStart(2, '0'));
+
+        document.getElementById('timer-ui').classList.remove('hidden');
+        document.getElementById('expired-msg').classList.add('hidden');
+    } else {
+        document.getElementById('timer-ui').classList.add('hidden');
+        document.getElementById('expired-msg').classList.remove('hidden');
+    }
+}
+
+/* ========= Live Stats from PHP =========
+   - page load হলে একবার view++ (pageview=1)
+   - তারপর প্রতি ৫ সেকেন্ডে active users + views রিফ্রেশ
+*/
+async function fetchStats(isPageView = false) {
+    try {
+        const url = isPageView ? "live-stats.php?pageview=1" : "live-stats.php";
+        const res = await fetch(url, { cache: "no-store" });
+        const data = await res.json();
+
+        document.getElementById('live-users').innerText  = toBengali(data.active_users);
+        document.getElementById('total-views').innerText = toBengali(data.total_views);
+    } catch (e) {
+        // error হলে silent
+    }
+}
+
+/* ========= Run ========= */
+setInterval(updateUI, 1000);
+updateUI();
+
+fetchStats(true);                // page view count একবার বাড়াবে
+setInterval(() => fetchStats(false), 5000); // এরপর প্রতি ৫ সেকেন্ডে আপডেট
+
+filterTable('Rahmat');
+</script>
+
+</body>
+</html>
